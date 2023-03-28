@@ -1,0 +1,315 @@
+Tutorial Neovim
+
+
+NO TERMINAL
+vimtutor pt 
+
+
+MODO NORMAL
+
+- Entrar no modo de inserção
+
+	i - modo de inserção (no caractere atual)
+	esc - sai do modo de inserção e entra no modo normal
+	shift + i - modo de inserção (no início da linha)
+	a - modo de inserção (um caractere após o caractere atual) "append"
+	shift + a - modo de inserção (no final da linha)
+	o - abre nova linha abaixo e entra no modo de inserção
+	shift + o - abre nova linha acima e entra no modo de inserção
+
+- Comandos
+
+	:q - sair
+	:w - salvar
+	:wq - salvar e sair
+	:x - salvar e sair
+	:q! - força saída sem salvar alterações no documento
+	shift + z + shift + z - salvar e sair
+
+- Movimentação
+	
+	setas - teclas de movimentação
+	h - movimentação para esquerda
+	j - movimentação para baixo
+	k - movimentação para cima
+	l - movimentação para direita
+	
+- Multiplicadores de movimentação
+	
+	[nº de linhas / colunas para salto] + tecla de movimentação
+	- Exemplo: 10 + j => Pula 10 linhas para baixo 
+	
+	Porcentagem: Valor numérico + %
+	- Exemplo: 50 + %: salta para a metade do documento
+	
+	shift + g - salta para o fim do documento
+	g + g - salta para o começo do documento
+	
+	Podemos combinar multiplicadores com g:
+	- Exemplo: 10 + shift + g - salta para a linha 10
+	- Exemplo: 30 + g + g - salta para a linha 30
+	
+	ctrl + o: retorna para a posição anterior
+	ctrl + i: retorna para a posição posterior
+
+	0 ou home - salta para o início da linha
+	$ ou end - salta para o final da linha
+	shift + home - salta para o começo do documento
+	shift + end - salta para o final do documento
+	
+- Movimentação entre palavras
+
+	w - vai para o início da próxima palavra
+	b - vai para o início da palavra anterior
+	e - vai para o fim da próxima palavra
+
+	Podemos combinar com multiplicadores
+	- Exemplo: 2 + w: pula duas palavras
+	- Exemplo: 2 + b: volta duas palavras
+
+- Deleção de palavras (guarda conteúdo no buffer [recorta])
+
+	dw - deleta palavra atual e coloca cursor no início da palavra seguinte
+	de - deleta palavra atual
+	dd - deleta a linha inteira
+	u - desfaz alterações (undo)
+	r - refaz alterações (redo)
+	
+	Podemos combinar com multiplicadores
+	- Exemplo: d + $: apaga todo o conteúdo até o final da linha
+	- Exemplo: d + 0: apaga todo o conteúdo até o início da linha
+	- Exemplo: d + 2 + w: apaga duas palavras para frente "delete two words"
+	- Exemplo: d + 3 + b: deleta três palavras para trás 
+
+- Edição de caracteres
+	
+	x - deletar caractere
+	[Multiplicador] + x - deleta sequência de caracteres
+	~ - Muda capitalização do caractere atual
+	r + [letra] - substitui caractere atual pela letra
+
+- Estado
+	
+	shift + g - mostra nome e estado do arquivo
+
+- Buscar palavras
+	
+	/ + palavra - mostra todas as ocorrências da palavra no documento e destaca a primeira ocorrência da mesma
+	? + palavra - mostra todas as ocorrências da palavra no documento e destaca a última ocorrência da mesma
+	enter + n - destaca a próxima ocorrência da palavra encontrada no documento - "next"
+	enter + shift + n - destaca a ocorrência anterior da palavra encontrada no documento - "previous"
+	ctrl + c - interrompe a busca atual
+
+- Operador change
+
+	ce - apaga palavra atual e entra no modo de inserção
+	de - apaga palavra atual e entra no modo de inserção
+
+	Podemos combinar com multiplicadores
+	- Exemplo: c + 2 + e: apaga duas palavras e entra no modo de inserção "change two words"
+
+	shift + c - apaga a linha inteira e entra no modo de inserção
+	c + shift + $ - apaga da posição atual do cursor até o final da linha e entra no modo de inserção
+	c + 0 - apaga da posição atual do cursor até o início da linha e entra no modo de inserção
+
+- Comando substituição
+
+	:s/PALAVRA_ANTIGA/NOVA_PALAVRA: na linha atual, substitui PALAVRA_ANTIGA, se houver, por NOVA_PALAVRA
+		- Exemplo: ":s/world/matheus" -> substitui 'world' por 'matheus'
+	:s/PALAVRA_ANTIGA/NOVA_PALAVRA/g: substitui todas as ocorrências de PALAVRA_ANTIGA, na linha atual, por NOVA_PALAVRA
+	:LINHA_INICIAL,LINHA_FINALs/PALAVRA_ANTIGA/NOVA_PALAVRA/g: substitui todas as ocorrências de PALAVRA_ANTIGA, no intervalo definido, por NOVA_PALAVRA
+	:%s/PALAVRA_ANTIGA/PALAVRA_NOVA/g: substitui todas as ocorrências de PALAVRA_ANTIGA, em todo o documento, por NOVA_PALAVRA
+	:s/PALAVRA_ANTIGA/NOVA_PALAVRA/gc: mesmo comportamento, mas agora com confirmação
+
+- Copiar e Colar linhas
+	
+	p - cola conteúdo no buffer uma linha abaixo do cursor "paste"
+	shift + p - cola conteúdo no buffer uma linha acima da posição atual do cursor "paste"
+	yy - copia uma linha inteira (yanked)
+
+	Podemos combinar com multiplicadores
+	- Exemplo: 2 + yy: copia duas linhas a partir do cursor
+
+- Dividir a tela em dois
+	
+	ctrl + w + v - duplica a tela atual e a divide em dois na vertical
+	ctrl + w + s - duplica a tela atual e a divide em dois na horizontal
+	ctrl + w + w - alterna para a próxima tela
+	:e + nome_do_arquivo - abre nome_do_arquivo na aba atual
+	:qa - fecha todas as abas
+	:T - abre o terminal no lado de baixo
+	:VT - abre o terminal no lado direito
+	:! + comando -  executa o comando do shell sem abrir uma nova guia
+	:r! + comando - coloca a saída do terminal no documento atual
+
+- Movimentação otimizada do cursor e da tela
+
+	shift + l - o cursor vai para o final da tela (i.e. o cursor vai até a última linha mostrada na tela atual) "low"
+	shift + m - o cursor vai para o meio da tela "middle"
+	shift + h - o cursor vai para o topo da tela "high"
+	ctrl + f - mesmo comportamento do page down
+	ctrl + b - mesmo comportamento do page up
+	ctrl + e - desloca a tela uma linha para baixo. o cursor não se movimenta.
+	ctrl + y - desloca a tela uma linha para cima. o cursor não se movimenta
+	ctrl + d - desloca meia tela para baixo
+	ctrl + u - desloca meita tela para cima
+
+- Identação de código 
+	
+	shift + > + > - identa uma linha (tab)
+	shift + < + < - desfaz a identação (tab reverso)
+
+	Podemos combinar com multiplicadores
+	- Exemplo: 3 shift + > + > - identa três linhas a partir da posição atual do cursor
+
+	shift + > i + shift + { - identa todo o conteúdo que estiver entre chaves
+	shift + < i + shift + } - desidenta todo o conteúdo que estiver entre chaves
+
+- Buffer de comandos
+	
+	. - refaz o último comando executado. funciona também no modo de edição (i. e. o buffer armazena o último conteúdo escrito no modo de inserção, que pode ser refeito no modo normal ao apertar '.')
+	
+- Find e Til in line
+
+	f + caractere - vai para próxima aparição do caractere na linha
+	shift + f + caractere - vai para a aparição anterior do caractere na linha
+	t + caractere - vai para o caratere antes da próxima aparição do caractere procurado na linha
+	shift + t + caractere - vai para o caractere antes da aparição anterior do caractere procurado na linha
+	 
+	* Estes comandos são muito úteis para a deleção *
+
+- Buffer
+	
+	:ls - lista todos os arquivos no buffer
+	:bp - alterna para o arquivo anterior armazenado no buffer "buffer previous"
+	:bn - alterna para o próximo arquivo armazenado no buffer "buffer next" 
+	ctrl + 6 - alterna para o arquivo anteriormente armazenado no buffer 
+	:b + id_buffer - alterna para o arquivo com id id_buffer
+	:e! - retorna o arquivo para o estado anterior (desfaz edições)	
+	:b + d - apaga buffer atual
+	:b + d + id_buffer - apaga buffer com id id_buffer 
+	:b + d + ! - força o fechamento do buffer atual
+
+- Marcações (marks)
+	
+	m + (letra qualquer) - realiza uma marcação
+	m + shift + (letra qualquer) - realiza uma marcação com letra maiúscula
+	:marks - exibe todas as marcações
+	' + (letra com marcação) - vai até a linha onde foi feita a marcação
+	` + (letra com marcação) - vai até a linha e coluna onde foi feita a marcação
+	:delmarks + (letra com marcação) - deleta a marcação
+	:delmarks + (intervalo de marcações) - deleta o intervalo de marcações
+		- Exemplo: :delmarks a-c - deleta todas as marcações entre a e c
+	:delmarks + (letra com marcação) + (outra letra com marcação)... - deleta várias marcações
+	:delmarks! - deleta todas as marcações criadas
+	shift + ` + . - vai para linha e coluna da última edição feita no documento
+	' + . - vai para a linha da última edição feita no documento
+	' + " - vai para linha e coluna onde o cursor esteve antes do arquivo ter sido fechado pela última vez
+	` + " - vai para a linha onde o cursor esteve antes do arquivo ter sido fechado pela última vez
+	' + ' - vai para última posição do cursor
+
+	No MODO VISUAL
+		Após selecionar trecho de texto:
+		shift + ` + shift + < - volta para o começo da última seleção visual
+		shift + ` + shift + > - volta para o final da última seleção visual
+
+	shift + ` + shift + [ - vai para o começo do último texto colado no documento
+	shift + ` + shift + ] - vai para o final do último texto colado no documento
+	' + shift + ^ - vai para a linha exata do cursor antes de sair do modo de inserção
+	shift + ` + shift + ^ - vai para a posição exata do cursor antes de sair do modo de inserção
+
+- Marcações numéricas
+	
+	Funciona como uma guia de recentemente abertas. Podemos combinar ' ou ` com números para abrir arquivos.
+
+- Abas
+
+	No terminal: nvim -p + arquivo1 + arquivo2 + ... - abre diversos arquivos
+	g + t - alterna para a próxima aba
+	g + shift + t - alterna para a aba anterior
+	n_da_aba + g + t - alterna para a aba especificada
+	:tabe[dit] + nome_do_arquivo - abre nome_do_arquivo em nova aba
+	:tabclose - fecha aba atual
+	:tabclose + n_da_aba - fecha aba n_da_aba
+	:tabs - lista todas as abas
+	:tabonly - mantém apenas a aba atual aberta
+	:tab ball - abre todas os arquivos no buffer
+	:tabm + n_da_posicao - move aba atual para a posição n_da_posicao
+	:tabm + (+ ou -) qtd_de_mov - move aba atual para a direita ou esquerda
+
+MODO VISUAL
+
+	v - entra no modo visual
+
+- Principais comandos
+
+	mover o cursor seleciona texto (como se estivesse segurando o shift e movendo o cursor)
+
+	d - deleta o texto selecionado (recorta)
+	y - copia o texto selecionado
+	p - cola o texto selecionado
+
+- Substituição de palavras e frases
+
+	Passos (Substituição de palavras):
+	A. Copiar:
+		1. v - entra no modo visual
+		2. e - seleciona a palavra atual (com o cursor posicionado na primeira letra da palavra)
+		3. y - copia a palavra atual (armazena no buffer)
+	B. Colar:
+		1. v - entra no modo visual
+		2. e - seleciona a palavra a ser substituída
+		3. p - cola a palavra armazenada no buffer (palavra substituída entra no buffer)
+	C. Substituir:
+		1. v - entra no modo visual
+		2. e - seleciona a palavra a ser substituída
+		3. p - cola a palavra armazenada no buffer 
+	
+	Passos (Substituição de frases):
+	A. Copiar:
+		1. v - entra no modo visual
+		2. e (repetidas vezes até o final da frase a ser substituída) - seleciona a frase atual
+		2.1. i + shift + delimitador *maneira mais eficiente em casos específicos* - seleciona a frase que está dentro de delimitadores 
+		3. y - copia a frase atual (armazena no buffer)
+	B. Colar:
+		1. v - entra no modo visual
+		2. seleciona frase a ser substituída
+		3. cola a frase armazenada no buffer
+	C. Substituir:
+		1. v - entra no modo visual
+		2. seleciona a frase a ser substituída
+		3. cola a frase armazenada no buffer
+
+- Esconder trechos de códigos com fold
+
+	z + f (com trecho de código selecionado) - folda conteúdo selecionado
+	z + o (na linha do fold) - desfaz o fold
+	z + c (dentro do código selecionado) - refaz o fold
+	z + d - apaga o fold
+	z + f + a + shift + "delimitador" (com cursor em cima do delimitador)- folda conteúdo dentro dos delimitadores
+	intervalo_inicial,intervalofinal+fo[ld] - folda conteúdo dentro do intervalo
+		Exemplo: 42,47fo - folda conteúdo entre as linhas 42 e 47
+	,(+ ou -)qtd_de_linhas - folda conteúdo qtd_de_linhas para cima ou para baixo
+	z + f + qtd_de_linhas + (k ou j) - folda conteúdo qtd_de_linhas para cima ou para baixo
+	z + n - abre todos os folds
+	:% foldopen - abre todos os folds
+	z + shift + n - fecha todos os folds
+	:% foldclose - fecha todos os folds
+	:(intervalo) + (foldclose ou foldopen) - abre ou fecha folds que pertencem ao intervalo especificado
+	z + shift + e - apaga todos os folds 
+
+- Movimentação entre os folds
+
+	z + (k ou j) - movimenta para o fold de cima ou de baixo
+	([ ou ]) + z  - movimenta para o começo ou final do fold
+ 
+	para salvar os folds, é necessário fazer:
+		:! mkdir -p .nvim/view
+		:mkview (é necessário usar este comando toda vez que houver uma alteração nos folds)
+		no próximo carregamendo do código, fazer:
+		:loadview
+	
+
+MODO VISUAL LINE
+
+	shift + v - entra no modo visual line (seleciona a linha atual e a seleção de texto passa a ser a cada linha)

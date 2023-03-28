@@ -1,0 +1,2 @@
+inserindo algum texto
+para praticar neovim
